@@ -6,6 +6,7 @@ val svgFilter = object: FileFilter() {
     override fun accept(f: File): Boolean = f.isDirectory || f.extension.equals("SVG", ignoreCase = true)
     override fun getDescription(): String = "SVG"
 }
+
 val watermarkedSvgFilter = object: FileFilter() {
     override fun accept(f: File): Boolean {
         if (f.isDirectory) return true

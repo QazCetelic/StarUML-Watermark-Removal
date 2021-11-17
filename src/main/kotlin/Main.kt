@@ -1,4 +1,5 @@
 import com.github.weisj.darklaf.LafManager
+import com.github.weisj.darklaf.LafManager.getPreferredThemeStyle
 import com.github.weisj.darklaf.theme.DarculaTheme
 import java.awt.*
 import java.io.File
@@ -12,8 +13,8 @@ import kotlin.system.exitProcess
 
 
 fun main() {
-    LafManager.setTheme(DarculaTheme())
-    LafManager.install()
+    val theme = LafManager.themeForPreferredStyle(getPreferredThemeStyle())
+    LafManager.install(theme)
 
     val frame = JFrame("StarUML Watermark Remover").apply {
         size = Dimension(700, 500)

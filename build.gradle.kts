@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "me.qaz"
-val ver = "1.0"
+val ver = "1.1"
 version = ver
 
 repositories {
