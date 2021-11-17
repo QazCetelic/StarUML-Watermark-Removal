@@ -1,0 +1,87 @@
+import com.github.weisj.darklaf.LafManager
+import com.github.weisj.darklaf.theme.DarculaTheme
+import java.awt.*
+import java.io.File
+import java.nio.charset.Charset
+import javax.swing.JButton
+import javax.swing.JComponent
+import javax.swing.JFileChooser
+import javax.swing.JFrame
+import javax.swing.filechooser.FileFilter
+import kotlin.system.exitProcess
+
+
+fun main() {
+    LafManager.setTheme(DarculaTheme())
+    LafManager.install()
+
+    val frame = JFrame("StarUML Watermark Remover").apply {
+        size = Dimension(700, 500)
+        defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+    }
+
+    val downloads = File("${System.getProperty("user.home")}/Downloads")
+    val filePicker = object: JFileChooser(downloads) {
+
+    }.apply {
+        val svgFilter = object: FileFilter() {
+            override fun accept(f: File): Boolean
+                    = f.isDirectory || f.extension.equals("SVG", ignoreCase = true)
+            override fun getDescription(): String = "SVG"
+        }
+        val watermarkedSvgFilter = object: FileFilter() {
+
+
+            override fun accept(f: File): Boolean {
+                if (f.isDirectory) return true
+                if (!f.extension.equals("SVG", ignoreCase = true)) return false
+
+                // Reads a certain region of bytes in a file and checks if it matches the regex
+                val skippedBytes = 128
+                val readBytes = 256
+                val totalBytes = skippedBytes + readBytes
+                if (f.length() < totalBytes) return false
+                val bReader = f.bufferedReader(Charset.defaultCharset(), totalBytes)
+                bReader.skip(skippedBytes.toLong())
+                val charBuffer = buildString {
+                    for (i in 0..readBytes) {
+                        append(bReader.read().toChar())
+                    }
+                }
+                return unregisteredTextRegex in charBuffer
+            }
+            override fun getDescription(): String = "Watermarked SVG"
+        }
+
+        addActionListener {
+            selectedFile.removeWatermark()
+            for (file in selectedFiles) {
+                file.removeWatermark()
+            }
+            // Re-Trigger watermarkSvgFilter
+            if (fileFilter == watermarkedSvgFilter) {
+                removeChoosableFileFilter(watermarkedSvgFilter)
+                addChoosableFileFilter(watermarkedSvgFilter)
+                fileFilter = watermarkedSvgFilter
+            }
+        }
+        approveButtonText = "Remove Watermark"
+
+        addChoosableFileFilter(svgFilter)
+        addChoosableFileFilter(watermarkedSvgFilter)
+
+        fileFilter = watermarkedSvgFilter
+
+        val buttonBox = ((components[3] as Container).components[3] as Container)
+        // Removes the 'cancel' button
+        ((buttonBox.components[1] as Container) as JButton).isVisible = false
+        // Fixes layout
+        buttonBox.layout = FlowLayout().apply {
+            alignment = FlowLayout.RIGHT
+        }
+        ((buttonBox.components[0] as Container) as JButton).toolTipText = "Removes Watermark from selected file"
+    }
+    frame.add(filePicker)
+
+    frame.isVisible = true
+}

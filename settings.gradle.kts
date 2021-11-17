@@ -1,0 +1,1 @@
+rootProject.name = "StarUML-Watermark-Removal"
