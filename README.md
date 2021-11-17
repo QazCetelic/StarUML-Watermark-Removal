@@ -1,5 +1,5 @@
 # StarUML-Watermark-Removal
-A tool (with a [dark theme](https://github.com/weisJ/darklaf)) for removing watermarks in SVG files created by the StarUML software.
+A tool for removing watermarks in SVG files created by the StarUML software.
 
 1. Select file(s)
 2. Press `Remove Watermark`
