@@ -16,4 +16,4 @@ A tool for removing watermarks in SVG files created by the StarUML software.
 ### Couldn't you just take a screenshot?
 Shush
 ### Can I have a light theme
-No
+It automatically uses the theme of your OS (including accent color)
