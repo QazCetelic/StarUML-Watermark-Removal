@@ -18,28 +18,13 @@ val watermarkedSvgFilter = object: FileFilter() {
         val stream = FileInputStream(file)
         if (128 > stream.available()) return false
         stream.skip(128)
-        val charBuffer2 = buildString {
+        val charBuffer = buildString {
             for (i in 0..(minOf(256, stream.available()))) {
                 val b = stream.read().toByte()
                 append(b.toChar())
             }
         }
-        println(charBuffer2)
 
-        // Checks if it matches the regex if it's uncertain if it's watermarked
-        // Reads a certain region of bytes in a file
-        val skippedBytes = 128
-        val readBytes    = 256
-        val totalBytes   = skippedBytes + readBytes
-        if (totalBytes > file.length()) return false
-
-        val bReader = file.bufferedReader(Charset.defaultCharset(), totalBytes)
-        bReader.skip(skippedBytes.toLong())
-        val charBuffer = buildString {
-            repeat(readBytes) {
-                append(bReader.read().toChar())
-            }
-        }
         return unregisteredTextRegex in charBuffer
     }
     override fun getDescription() = "Watermarked SVG"
