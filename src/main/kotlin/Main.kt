@@ -1,25 +1,16 @@
 import com.github.weisj.darklaf.LafManager
 import com.github.weisj.darklaf.LafManager.getPreferredThemeStyle
-import com.github.weisj.darklaf.theme.DarculaTheme
 import java.awt.*
 import java.io.File
-import java.nio.charset.Charset
+import javax.imageio.ImageIO
 import javax.swing.JButton
-import javax.swing.JComponent
 import javax.swing.JFileChooser
 import javax.swing.JFrame
-import javax.swing.filechooser.FileFilter
-import kotlin.system.exitProcess
 
 
 fun main() {
     val theme = LafManager.themeForPreferredStyle(getPreferredThemeStyle())
     LafManager.install(theme)
-
-    val frame = JFrame("StarUML Watermark Remover").apply {
-        size = Dimension(700, 500)
-        defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-    }
 
     val downloads = File("${System.getProperty("user.home")}/Downloads")
     val filePicker = JFileChooser(downloads).apply {
@@ -35,23 +26,42 @@ fun main() {
                 fileFilter = watermarkedSvgFilter
             }
         }
-        approveButtonText = "Remove Watermark"
 
+        /*
+            FILE FILTERS
+         */
+        // Adds filters
         addChoosableFileFilter(svgFilter)
         addChoosableFileFilter(watermarkedSvgFilter)
-
+        // Sets default file filter
         fileFilter = watermarkedSvgFilter
 
+
+        /*
+            ADJUST UI ELEMENTS
+         */
+
         val buttonBox = ((components[3] as Container).components[3] as Container)
-        // Removes the 'cancel' button
-        ((buttonBox.components[1] as Container) as JButton).isVisible = false
-        // Fixes layout
-        buttonBox.layout = FlowLayout().apply {
-            alignment = FlowLayout.RIGHT
-        }
-        ((buttonBox.components[0] as Container) as JButton).toolTipText = "Removes Watermark from selected file"
+        val cancelButton = ((buttonBox.components[1] as Container) as JButton)
+        val removeWatermarkButton = ((buttonBox.components[0] as Container) as JButton)
+
+        approveButtonText                   = "Remove Watermark"
+        removeWatermarkButton.toolTipText   = "Removes Watermark from selected file"
+
+        // Removes the 'cancel' button…
+        cancelButton.isVisible = false
+        // …and then fixes the layout
+        buttonBox.layout = FlowLayout().apply { alignment = FlowLayout.RIGHT }
     }
 
-    frame.add(filePicker)
-    frame.isVisible = true
+    JFrame("StarUML Watermark Remover").apply {
+        size = Dimension(700, 500)
+        defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+        add(filePicker)
+        isVisible = true
+
+        val classLoader: ClassLoader = {}::class.java.classLoader
+        val resource = classLoader.getResourceAsStream("icon.png")
+        iconImage = ImageIO.read(resource)
+    }
 }
