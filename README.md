@@ -16,3 +16,7 @@ This is only possible for getting rasterized images 🖼️, vector images 🟥 
 
 ### Can I have a light theme?
 It automatically uses the theme of your OS including the accent color you've chosen.
+
+
+## Credits
+Icon from the [Papirus Icon project](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme).
