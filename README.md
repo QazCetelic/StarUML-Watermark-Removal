@@ -14,7 +14,7 @@ https://user-images.githubusercontent.com/51381523/146266154-1ff6eafa-60b7-4ca0-
 ### Couldn't you just take a screenshot?
 This is only possible for getting rasterized images 🖼️, vector images 🟥 can't be exported this way. 
 
-### Can I have a light theme?
+### Can I have a dark theme?
 It automatically uses the theme of your OS including the accent color you've chosen.
 
 
