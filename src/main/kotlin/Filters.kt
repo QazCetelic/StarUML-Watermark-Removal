@@ -2,28 +2,34 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
 import java.nio.charset.Charset
+import java.nio.file.Files
 import java.util.*
+import javax.swing.JFileChooser
 import javax.swing.filechooser.FileFilter
 
 val svgFilter = object: FileFilter() {
-    override fun accept(file: File): Boolean = file.isDirectory || file.extension.equals("SVG", ignoreCase = true)
+    override fun accept(file: File): Boolean {
+        return file.isDirectory || Files.probeContentType(file.toPath()) == "image/svg+xml"
+    }
     override fun getDescription() = "SVG"
 }
 
 val watermarkedSvgFilter = object: FileFilter() {
     override fun accept(file: File): Boolean {
         if (file.isDirectory) return true
-        if (!file.extension.equals("SVG", ignoreCase = true)) return false
+        if (Files.probeContentType(file.toPath()) != "image/svg+xml") return false
 
         val stream = FileInputStream(file)
         if (128 > stream.available()) return false
         stream.skip(128)
         val charBuffer = buildString {
+            // Reads 256 bytes or fewer depending on file size
             for (i in 0..(minOf(256, stream.available()))) {
                 val b = stream.read().toByte()
                 append(b.toChar())
             }
         }
+        stream.close()
 
         return unregisteredTextRegex in charBuffer
     }
