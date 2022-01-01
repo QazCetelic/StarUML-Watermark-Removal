@@ -4,7 +4,7 @@ A tool for removing watermarks in SVG files created by the StarUML software.
 1. Select files
 2. Press `Remove Watermark`
 
-![RemoveWatermark](https://user-images.githubusercontent.com/51381523/142168242-3e00c07b-5130-4ee0-9a90-9dbe3b895ff0.png)
+https://user-images.githubusercontent.com/51381523/146266154-1ff6eafa-60b7-4ca0-be2c-0039b5652c9a.mp4
 
 | Before | After |
 |    -   |   -   |
@@ -14,7 +14,7 @@ A tool for removing watermarks in SVG files created by the StarUML software.
 ### Couldn't you just take a screenshot?
 This is only possible for getting rasterized images 🖼️, vector images 🟥 can't be exported this way. 
 
-### Can I have a light theme?
+### Can I have a dark theme?
 It automatically uses the theme of your OS including the accent color you've chosen.
 
 
