@@ -9,6 +9,7 @@ import javax.swing.filechooser.FileFilter
 
 val svgFilter = object: FileFilter() {
     override fun accept(file: File): Boolean {
+        // Uses this instead of matching with file extensions because the extension is not always present
         return file.isDirectory || Files.probeContentType(file.toPath()) == "image/svg+xml"
     }
     override fun getDescription() = "SVG"
@@ -17,6 +18,7 @@ val svgFilter = object: FileFilter() {
 val watermarkedSvgFilter = object: FileFilter() {
     override fun accept(file: File): Boolean {
         if (file.isDirectory) return true
+        // Uses this instead of matching with file extensions because the extension is not always present
         if (Files.probeContentType(file.toPath()) != "image/svg+xml") return false
 
         val stream = FileInputStream(file)
