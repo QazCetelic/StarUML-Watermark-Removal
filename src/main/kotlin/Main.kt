@@ -9,8 +9,11 @@ import javax.swing.JFrame
 
 
 fun main() {
-    val theme = LafManager.themeForPreferredStyle(getPreferredThemeStyle())
-    LafManager.install(theme)
+    val systemTheme = LafManager.themeForPreferredStyle(getPreferredThemeStyle())
+    LafManager.install(systemTheme)
+
+    System.setProperty("awt.useSystemAAFontSettings","on");
+    System.setProperty("swing.aatext", "true");
 
     val downloads = File("${System.getProperty("user.home")}/Downloads")
     val filePicker = JFileChooser(downloads).apply {
@@ -60,8 +63,7 @@ fun main() {
         add(filePicker)
         isVisible = true
 
-        val classLoader: ClassLoader = {}::class.java.classLoader
-        val resource = classLoader.getResourceAsStream("icon.png")
-        iconImage = ImageIO.read(resource)
+        val iconStream = ClassLoader.getSystemClassLoader().getResourceAsStream("icon.png")
+        iconImage = ImageIO.read(iconStream)
     }
 }
