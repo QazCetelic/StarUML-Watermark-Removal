@@ -1,10 +1,6 @@
 import java.io.File
 import java.io.FileInputStream
-import java.io.InputStream
-import java.nio.charset.Charset
 import java.nio.file.Files
-import java.util.*
-import javax.swing.JFileChooser
 import javax.swing.filechooser.FileFilter
 
 val svgFilter = object: FileFilter() {

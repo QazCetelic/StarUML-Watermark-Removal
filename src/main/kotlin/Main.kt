@@ -1,13 +1,11 @@
 import com.github.weisj.darklaf.LafManager
 import com.github.weisj.darklaf.LafManager.getPreferredThemeStyle
-import java.awt.*
+import java.awt.Container
+import java.awt.Dimension
+import java.awt.FlowLayout
 import java.io.File
 import javax.imageio.ImageIO
-import javax.swing.JButton
-import javax.swing.JCheckBox
-import javax.swing.JFileChooser
-import javax.swing.JFrame
-import javax.swing.JLabel
+import javax.swing.*
 
 
 fun main() {
