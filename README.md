@@ -4,7 +4,7 @@ A tool for removing watermarks in SVG files created by the StarUML software.
 1. Select files
 2. Press `Remove Watermark`
 
-https://user-images.githubusercontent.com/51381523/146266154-1ff6eafa-60b7-4ca0-be2c-0039b5652c9a.mp4
+https://user-images.githubusercontent.com/51381523/155106425-7fe55363-21a8-49c1-8d7e-063fac9a8bb9.mp4
 
 | Before | After |
 |    -   |   -   |
