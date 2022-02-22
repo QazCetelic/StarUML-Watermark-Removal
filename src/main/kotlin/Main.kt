@@ -4,8 +4,10 @@ import java.awt.*
 import java.io.File
 import javax.imageio.ImageIO
 import javax.swing.JButton
+import javax.swing.JCheckBox
 import javax.swing.JFileChooser
 import javax.swing.JFrame
+import javax.swing.JLabel
 
 
 fun main() {
@@ -17,10 +19,12 @@ fun main() {
 
     val downloads = File("${System.getProperty("user.home")}/Downloads")
     val filePicker = JFileChooser(downloads).apply {
+        val convertCheckBox = JCheckBox()
+
         addActionListener {
-            selectedFile.removeWatermark()
+            selectedFile.removeWatermark(convertCheckBox.isSelected)
             for (file in selectedFiles) {
-                file.removeWatermark()
+                file.removeWatermark(convertCheckBox.isSelected)
             }
             // Re-Trigger watermarkSvgFilter
             if (fileFilter == watermarkedSvgFilter) {
@@ -46,13 +50,24 @@ fun main() {
 
         val buttonBox = ((components[3] as Container).components[3] as Container)
         val cancelButton = ((buttonBox.components[1] as Container) as JButton)
-        val removeWatermarkButton = ((buttonBox.components[0] as Container) as JButton)
-
-        approveButtonText                   = "Remove Watermark"
-        removeWatermarkButton.toolTipText   = "Removes Watermark from selected file"
+        val openFileButton = ((buttonBox.components[0] as Container) as JButton)
 
         // Removes the 'cancel' button…
         cancelButton.isVisible = false
+
+        openFileButton.addPropertyChangeListener {
+            if (it.propertyName == "text") {
+                openFileButton.text = "Remove Watermark"
+            }
+        }
+        openFileButton.text = "Remove Watermark"
+        openFileButton.toolTipText = ""
+
+        buttonBox.apply {
+            add(JLabel("Convert to PNG"), 0)
+            add(convertCheckBox, 0)
+        }
+
         // …and then fixes the layout
         buttonBox.layout = FlowLayout().apply { alignment = FlowLayout.RIGHT }
     }
