@@ -6,8 +6,7 @@ plugins {
 }
 
 group = "me.qaz"
-val ver = "1.1.0"
-version = ver
+version = "1.2.0"
 
 repositories {
     mavenCentral()
@@ -41,7 +40,7 @@ launch4j {
     mainClassName = "MainKt"
     internalName = project.name
     productName = project.name
-    textVersion = ver
+    textVersion = version
     icon = "$projectDir/src/main/resources/icons.ico"
     fileDescription = "A tool for removing watermarks in SVG files created by the StarUML software"
     copyright = "MIT"
