@@ -16,6 +16,7 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     implementation("com.github.weisj:darklaf-core:2.7.3")
+    implementation("org.kie.modules:org-apache-batik:6.1.0.Beta1")
 }
 
 tasks.test {
