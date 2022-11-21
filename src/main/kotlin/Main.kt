@@ -20,9 +20,9 @@ fun main() {
         val convertCheckBox = JCheckBox()
 
         addActionListener {
-            selectedFile.removeWatermark(convertCheckBox.isSelected)
+            selectedFile.withoutWatermark(convertCheckBox.isSelected)
             for (file in selectedFiles) {
-                file.removeWatermark(convertCheckBox.isSelected)
+                file.withoutWatermark(convertCheckBox.isSelected)
             }
             // Re-Trigger watermarkSvgFilter
             if (fileFilter == watermarkedSvgFilter) {

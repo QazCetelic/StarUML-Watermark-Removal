@@ -6,7 +6,6 @@ import org.apache.batik.transcoder.image.PNGTranscoder
 import org.apache.batik.transcoder.svg2svg.SVGTranscoder
 import org.apache.batik.util.XMLResourceDescriptor
 import org.w3c.dom.Document
-import org.w3c.dom.Node
 import org.w3c.dom.NodeList
 import java.io.File
 import java.io.FileOutputStream
@@ -16,10 +15,10 @@ import java.nio.charset.StandardCharsets
 
 val unregisteredTextRegex = Regex("<text([^>])+>UNREGISTERED</text>")
 
-fun File.removeWatermark(convertToImage: Boolean) {
+fun File.withoutWatermark(convertToImage: Boolean) {
     // TODO use less hacky method to remove watermark
     stupidWatermarkRemoval()
-    val svg = toSVGDocument().removeWatermark()
+    val svg = toSVGDocument().withoutWatermark()
     writeSvg(svg)
     if (convertToImage) {
         val bitmapFile = File(parentFile, "$nameWithoutExtension.png")
@@ -31,7 +30,7 @@ fun File.stupidWatermarkRemoval() {
     writeText(readText().replace(unregisteredTextRegex, ""))
 }
 
-fun Document.removeWatermark(): Document {
+fun Document.withoutWatermark(): Document {
     val textElements: NodeList = getElementsByTagName("text")
     for (element in textElements.iterator()) {
         if ("UNREGISTERED" in element.firstChild.nodeValue) {
@@ -41,8 +40,8 @@ fun Document.removeWatermark(): Document {
             // Reduces the size of the font because it's too big when for some reason
             val fontSizeNode = element.attributes.getNamedItem("font-size")
             val fontSize = fontSizeNode.nodeValue.removeSuffix("px").toIntOrNull() ?: 0
-            // Reduce the font size by 8%
-            val newFontSize = (fontSize * 0.92).toInt()
+            // Reduce the font size by 15%
+            val newFontSize = (fontSize * 0.85).toInt()
             fontSizeNode.nodeValue = newFontSize.toString() + "px"
         }
     }
@@ -72,8 +71,12 @@ fun File.writeSvgAsBitmap(svg: Document) {
         val outputStream            = outputStream()
         val outputTranscodeStream   = TranscoderOutput(outputStream)
 
+        // Create transcoder with transparant background
+        val transcoder = PNGTranscoder()
+        transcoder.addTranscodingHint(PNGTranscoder.KEY_FORCE_TRANSPARENT_WHITE, true)
+
         // Save the image.
-        PNGTranscoder().transcode(inputTranscodeStream, outputTranscodeStream)
+        transcoder.transcode(inputTranscodeStream, outputTranscodeStream)
     } catch (ex: IOException) {
         println("Failed to read/write to files: $ex")
     } catch (ex: TranscoderException) {
