@@ -3,7 +3,7 @@ A tool for removing watermarks in SVG files created by the StarUML software.
 
 1. Select files
 2. Press `Remove Watermark`
-3. Enjoy your `.svg` or `.png`!
+3. Enjoy your `.svg` or `.png` with transparent background!
 
 https://user-images.githubusercontent.com/51381523/155106425-7fe55363-21a8-49c1-8d7e-063fac9a8bb9.mp4
 
