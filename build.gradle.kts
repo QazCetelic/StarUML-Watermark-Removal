@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation("org.apache.pdfbox:pdfbox:2.0.1")
     implementation("com.github.weisj:darklaf-core:2.7.3")
     implementation("org.kie.modules:org-apache-batik:6.1.0.Beta1")
 }
