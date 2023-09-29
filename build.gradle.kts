@@ -43,7 +43,7 @@ launch4j {
     textVersion = version
     icon = "$projectDir/src/main/resources/icons.ico"
     fileDescription = "A tool for removing watermarks in SVG files created by the StarUML software"
-    copyright = "MIT"
+    copyright = "GPL-3.0"
 }
 
 // All platform build
