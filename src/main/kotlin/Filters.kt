@@ -11,6 +11,15 @@ val svgFilter = object: FileFilter() {
     override fun getDescription() = "SVG"
 }
 
+val pdfFilter = object: FileFilter() {
+    override fun accept(file: File): Boolean {
+        // Uses this instead of matching with file extensions because the extension is not always present
+        return file.isDirectory || Files.probeContentType(file.toPath()) == "application/pdf"
+    }
+    override fun getDescription() = "PDF"
+}
+
+
 val watermarkedSvgFilter = object: FileFilter() {
     override fun accept(file: File): Boolean {
         if (file.isDirectory) return true
