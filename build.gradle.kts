@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -22,9 +23,12 @@ dependencies {
 tasks.test {
     useJUnit()
 }
+tasks.withType<JavaCompile>() {
+    sourceCompatibility = JavaVersion.VERSION_1_8.toString()
+}
 
 tasks.withType<KotlinCompile>() {
-    kotlinOptions.jvmTarget = "1.8"
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_1_8)
 }
 
 // Unix build
