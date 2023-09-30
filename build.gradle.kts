@@ -1,7 +1,8 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.31"
+    kotlin("jvm") version "1.9.10"
     id("edu.sc.seis.launch4j") version "2.5.0"
 }
 
@@ -14,6 +15,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation("org.apache.pdfbox:pdfbox:2.0.29")
     implementation("com.github.weisj:darklaf-core:2.7.3")
     implementation("org.kie.modules:org-apache-batik:6.1.0.Beta1")
 }
@@ -21,9 +23,12 @@ dependencies {
 tasks.test {
     useJUnit()
 }
+tasks.withType<JavaCompile>() {
+    sourceCompatibility = JavaVersion.VERSION_1_8.toString()
+}
 
 tasks.withType<KotlinCompile>() {
-    kotlinOptions.jvmTarget = "1.8"
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_1_8)
 }
 
 // Unix build

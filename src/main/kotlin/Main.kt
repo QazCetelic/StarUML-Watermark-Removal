@@ -38,6 +38,7 @@ fun main() {
         // Adds filters
         addChoosableFileFilter(svgFilter)
         addChoosableFileFilter(watermarkedSvgFilter)
+        addChoosableFileFilter(pdfFilter)
         // Sets default file filter
         fileFilter = watermarkedSvgFilter
 
